@@ -2,7 +2,7 @@
   "name": "rakitmimpi-nextjs-boilerplate",
   "version": "1.0.0",
   "private": true,
-  "description": "Production-ready Enterprise Next.js 15 App Router Boilerplate by Rakitmimpi Ecosystem (Tailwind CSS, Dark Mode, Prisma SQLite/Postgres ready, Stateless JWT Auth, Reusable UI kit primitives)",
+  "description": "Production-ready Enterprise Next.js 15 App Router Boilerplate by Rakitmimpi Ecosystem (Tailwind CSS, Dark Mode, Prisma SQLite/Postgres ready, Stateless JWT Auth, Reusable UI kit primitives, Kubb OpenAPI Codegen, and Transparent Backend Reverse-Proxy)",
   "type": "module",
   "scripts": {
     "dev": "next dev -p 3000",
@@ -11,10 +11,12 @@
     "lint": "next lint",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "db:generate": "prisma generate"
+    "db:generate": "prisma generate",
+    "kubb:gen": "kubb generate --config kubb.config.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.4.1",
+    "@tanstack/react-query": "^5.62.8",
     "bcryptjs": "^3.0.3",
     "clsx": "^2.1.1",
     "framer-motion": "^11.15.0",
@@ -26,6 +28,12 @@
     "tailwind-merge": "^3.0.0"
   },
   "devDependencies": {
+    "@kubb/cli": "^3.5.0",
+    "@kubb/core": "^3.5.0",
+    "@kubb/plugin-client": "^3.5.0",
+    "@kubb/plugin-oas": "^3.5.0",
+    "@kubb/plugin-react-query": "^3.5.0",
+    "@kubb/plugin-ts": "^3.5.0",
     "@types/bcryptjs": "^3.0.0",
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.2",

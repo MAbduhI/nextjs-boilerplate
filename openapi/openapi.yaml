@@ -1,0 +1,23 @@
+openapi: 3.0.3
+info:
+  title: Rakitmimpi Service API
+  version: 1.0.0
+  description: Sample OpenAPI specification for Kubb code generation
+paths:
+  /api/v1/health:
+    get:
+      summary: Health check endpoint
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "ok"
+                  timestamp:
+                    type: string
+                    format: date-time
