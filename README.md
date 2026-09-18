@@ -1,63 +1,117 @@
 # rakitmimpi-nextjs-boilerplate
 
-Boilerplate Enterprise Next.js 15 (App Router) standar ekosistem **Rakitmimpi Research**.
+**English** | [Bahasa Indonesia](README.id.md)
 
-## 🚀 Fitur Unggulan Arsitektur
-- **Next.js 15 + React 19:** App Router, SSR, SSG, dan React Server Components.
-- **🛡️ Transparent Backend Reverse-Proxy:**
-  - Endpoint catch-all `/src/app/api/v1/[...path]/route.ts`.
-  - Di browser/network tab, seluruh request FE diarahkan ke origin lokal (`/api/v1/...`) seolah-olah request lokal.
-  - Server Next.js secara transparan meneruskan request ke backend asli (`API_BACKEND_URL`), otomatis menyembunyikan IP backend, bebas isu CORS, dan mendukung streaming duplex (video/audio/large binary).
-- **⚙️ Kubb CLI (OpenAPI TypeScript Codegen):**
-  - Dikonfigurasi penuh di `kubb.config.ts`.
-  - Mengonversi file OpenAPI specification (`./openapi/openapi.yaml`) menjadi:
-    1. **TypeScript Models/Types** (`src/gen/types`)
-    2. **API Clients & SDK** (`src/gen/clients`)
+Production-ready enterprise Next.js 15 (App Router) boilerplate by **Rakitmimpi Ecosystem**.
+
+---
+
+## Architectural Highlights
+
+- **Next.js 15 + React 19:** Full App Router support, SSR, SSG, and React Server Components.
+- **Transparent Backend Reverse Proxy:**
+  - Catch-all route handler at `/src/app/api/v1/[...path]/route.ts`.
+  - Browser/client requests hit the local origin (`/api/v1/...`) without cross-origin issues.
+  - Next.js server transparently proxies requests to the upstream backend (`API_BACKEND_URL`), hiding backend IP/origin, eliminating CORS, and supporting duplex streaming (video/audio/large binaries).
+- **Kubb CLI (OpenAPI TypeScript Codegen):**
+  - Configured in `kubb.config.ts`.
+  - Generates types and client hooks from `./openapi/openapi.yaml`:
+    1. **TypeScript Types & Models** (`src/gen/types`)
+    2. **API Client & SDK** (`src/gen/clients`)
     3. **React Query Hooks** (`src/gen/hooks` via `@tanstack/react-query`)
-  - Seluruh call otomatis melewati `src/lib/api-client.ts` yang ramah reverse-proxy.
-- **Styling:** Tailwind CSS + PostCSS dengan Dark Theme bawaan.
-- **Authentication:** Stateless JWT Session menggunakan `jose` dan `bcryptjs` disimpan di `HttpOnly` cookie.
-- **Database & ORM:** Prisma ORM siap pakai (default SQLite untuk portabilitas cepat, mudah diubah ke PostgreSQL).
-- **Icons & UI Primitives:** Lucide React, clsx, tailwind-merge (`cn` utility), dan Framer Motion.
-- **Docker Production Ready:** Multi-stage Dockerfile dengan output standalone yang sangat ringan.
+  - All calls flow through proxy-aware HTTP client (`src/lib/api-client.ts`).
+- **Styling:** Tailwind CSS + PostCSS with built-in dark theme.
+- **Stateless JWT Authentication:** Built-in session handling with `jose` and `bcryptjs` via `HttpOnly` cookies.
+- **Database & ORM:** Prisma ORM ready (SQLite default for zero-setup portability, easy to switch to PostgreSQL).
+- **Icons & UI Primitives:** Lucide React, clsx, tailwind-merge (`cn`), and Framer Motion.
 
-## 📁 Struktur Direktori
+---
+
+## Directory Structure
+
 ```
 .
-├── kubb.config.ts            # Konfigurasi Kubb OpenAPI code generator
+├── kubb.config.ts            # Kubb OpenAPI code generator configuration
 ├── openapi/
-│   └── openapi.yaml          # Spesifikasi OpenAPI backend
+│   └── openapi.yaml          # Upstream OpenAPI specification
 ├── prisma/
-│   └── schema.prisma         # Definisi schema database
+│   └── schema.prisma         # Prisma database schema (SQLite / PostgreSQL)
 ├── src/
 │   ├── app/
-│   │   ├── api/v1/[...path]/ # Reverse Proxy Catch-All ke backend asli
-│   │   ├── layout.tsx        # Root layout HTML & Theme
-│   │   ├── globals.css       # Tailwind CSS root tokens
+│   │   ├── api/v1/[...path]/ # Reverse proxy catch-all to upstream backend
+│   │   ├── layout.tsx        # Root HTML layout & theme wrapper
+│   │   ├── globals.css       # Tailwind CSS & theme tokens
 │   │   └── page.tsx          # Landing page
-│   ├── components/           # Reusable UI & Layout components
-│   ├── gen/                  # Hasil generate otomatis Kubb (types, clients, hooks)
-│   ├── hooks/                # Custom React Hooks
+│   ├── components/           # Reusable UI & layout components
+│   ├── gen/                  # Kubb generated code (types, clients, hooks)
+│   ├── hooks/                # Custom React hooks
 │   ├── lib/
-│   │   ├── api-client.ts     # Client HTTP (Auto proxy-aware & SSR direct)
-│   │   └── utils.ts          # Helper cn, formatter, dll
+│   │   ├── api-client.ts     # Proxy-aware fetch client (SSR direct, client proxied)
+│   │   └── utils.ts          # Class merging (cn) and shared helpers
 │   └── server/
-│       ├── auth.ts           # Stateless JWT, password hashing & cookie session
-│       └── prisma.ts         # Singleton Prisma Client
-└── Dockerfile                # Production standalone container build
+│       ├── auth.ts           # Stateless JWT, password hashing & cookie sessions
+│       └── prisma.ts         # Singleton Prisma client instance
+└── .env.example              # Environment variables template
 ```
 
-## 🛠️ Perintah Utama
-```bash
-# 1. Install dependencies
-pnpm install
+---
 
-# 2. Generate TypeScript Types & React Query Hooks dari OpenAPI spec
+## Quick Start
+
+### 1. Prerequisites
+
+- Node.js >= 20
+- pnpm (recommended) or npm / yarn
+
+### 2. Installation
+
+```bash
+# Install dependencies
+pnpm install
+```
+
+### 3. Environment Configuration
+
+```bash
+# Copy sample environment configuration
+cp .env.example .env
+```
+
+### 4. Code Generation & Database Setup
+
+```bash
+# Generate TypeScript types & React Query hooks from openapi/openapi.yaml
 pnpm kubb:gen
 
-# 3. Sinkronkan Database SQLite/Postgres
+# Sync database schema (creates local SQLite file dev.db)
 pnpm db:push
+```
 
-# 4. Jalankan Dev Server
+### 5. Start Development Server
+
+```bash
 pnpm dev
 ```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## Available Scripts
+
+| Command | Description |
+|---|---|
+| `pnpm dev` | Start development server on port 3000 |
+| `pnpm build` | Generate Prisma client and build production bundle |
+| `pnpm start` | Run production server |
+| `pnpm lint` | Run ESLint checks |
+| `pnpm kubb:gen` | Run Kubb code generation from OpenAPI spec |
+| `pnpm db:push` | Push Prisma schema changes to database |
+| `pnpm db:generate` | Regenerate Prisma client |
+| `pnpm db:studio` | Open Prisma Studio database GUI |
+
+---
+
+## License
+
+Private / Rakitmimpi Ecosystem.
