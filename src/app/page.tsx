@@ -16,7 +16,7 @@ export default async function HomePage() {
       </h1>
 
       <p className="text-slate-400 text-base max-w-xl mx-auto leading-relaxed">
-        Boilerplate frontend Next.js standar Rakitmimpi Ecosystem. Dilengkapi dengan Tailwind CSS, Dark Mode, Prisma ORM, Stateless JWT Session, dan arsitektur modular enterprise.
+        Boilerplate frontend Next.js standar Rakitmimpi Ecosystem. Dilengkapi dengan Tailwind CSS, Dark Mode, OpenAPI &amp; Kubb Codegen, Transparent Backend Reverse-Proxy, Stateless JWT Session, dan arsitektur modular enterprise.
       </p>
 
       <div className="flex flex-wrap items-center justify-center gap-4">
@@ -55,9 +55,9 @@ export default async function HomePage() {
           <p className="text-xs text-slate-400 mt-1">HttpOnly cookie session menggunakan library Jose & BcryptJS aman terhadap XSS.</p>
         </div>
         <div className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80">
-          <span className="text-2xl mb-2 block">💾</span>
-          <h3 className="font-bold text-white text-sm">Prisma ORM</h3>
-          <p className="text-xs text-slate-400 mt-1">Kompatibel dengan SQLite (development/offline) dan PostgreSQL (production).</p>
+          <span className="text-2xl mb-2 block">🔌</span>
+          <h3 className="font-bold text-white text-sm">OpenAPI & Reverse Proxy</h3>
+          <p className="text-xs text-slate-400 mt-1">Otomatis generate TypeScript types, React Query hooks, dan transparent proxy ke backend.</p>
         </div>
       </div>
     </main>

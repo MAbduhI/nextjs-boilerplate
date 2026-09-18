@@ -4,6 +4,8 @@
 
 Boilerplate Enterprise Next.js 15 (App Router) standar ekosistem **Rakitmimpi Research**.
 
+Dirancang khusus sebagai arsitektur frontend thin-client modern yang berorientasi mengonsumsi microservices backend (Go/Rust/dsb) via transparent reverse-proxy dan OpenAPI contract codegen.
+
 ---
 
 ## 🚀 Fitur Unggulan Arsitektur
@@ -16,14 +18,14 @@ Boilerplate Enterprise Next.js 15 (App Router) standar ekosistem **Rakitmimpi Re
 - **⚙️ Kubb CLI (OpenAPI TypeScript Codegen):**
   - Dikonfigurasi penuh di `kubb.config.ts`.
   - Mengonversi file OpenAPI specification (`./openapi/openapi.yaml`) menjadi:
-    1. **TypeScript Models/Types** (`src/gen/types`)
+    1. **TypeScript Models & Types** (`src/gen/types`)
     2. **API Clients & SDK** (`src/gen/clients`)
     3. **React Query Hooks** (`src/gen/hooks` via `@tanstack/react-query`)
   - Seluruh call otomatis melewati `src/lib/api-client.ts` yang ramah reverse-proxy.
 - **Styling:** Tailwind CSS + PostCSS dengan Dark Theme bawaan.
 - **Authentication:** Stateless JWT Session menggunakan `jose` dan `bcryptjs` disimpan di `HttpOnly` cookie.
-- **Database & ORM:** Prisma ORM siap pakai (default SQLite untuk portabilitas cepat, mudah diubah ke PostgreSQL).
 - **Icons & UI Primitives:** Lucide React, clsx, tailwind-merge (`cn` utility), dan Framer Motion.
+- **Opsional On-Demand Prisma ORM:** Bebas dependensi database secara default (pure frontend garis keras). Jika proyek membutuhkan akses database lokal/langsung, inisialisasi on-demand via `pnpm gen:prisma`.
 
 ---
 
@@ -34,8 +36,8 @@ Boilerplate Enterprise Next.js 15 (App Router) standar ekosistem **Rakitmimpi Re
 ├── kubb.config.ts            # Konfigurasi Kubb OpenAPI code generator
 ├── openapi/
 │   └── openapi.yaml          # Spesifikasi OpenAPI backend
-├── prisma/
-│   └── schema.prisma         # Definisi schema database (SQLite / PostgreSQL)
+├── scripts/
+│   └── init-prisma.mjs       # Script inisialisasi on-demand Prisma
 ├── src/
 │   ├── app/
 │   │   ├── api/v1/[...path]/ # Reverse Proxy Catch-All ke backend asli
@@ -49,8 +51,7 @@ Boilerplate Enterprise Next.js 15 (App Router) standar ekosistem **Rakitmimpi Re
 │   │   ├── api-client.ts     # Client HTTP (Auto proxy-aware & SSR direct)
 │   │   └── utils.ts          # Helper cn, formatter, dll
 │   └── server/
-│       ├── auth.ts           # Stateless JWT, password hashing & cookie session
-│       └── prisma.ts         # Singleton Prisma Client
+│       └── auth.ts           # Stateless JWT, password hashing & cookie session
 └── .env.example              # Template environment variable
 ```
 
@@ -75,14 +76,11 @@ pnpm install
 cp .env.example .env
 ```
 
-### 4. Code Generation & Database Setup
+### 4. Generate Types & Hooks dari OpenAPI Spec
 
 ```bash
 # Generate TypeScript Types & React Query Hooks dari OpenAPI spec
 pnpm kubb:gen
-
-# Sinkronkan Database SQLite/Postgres
-pnpm db:push
 ```
 
 ### 5. Jalankan Dev Server
@@ -95,18 +93,37 @@ Akses [http://localhost:3000](http://localhost:3000) pada browser.
 
 ---
 
+## 💾 Opsional: Inisialisasi Prisma ORM
+
+Jika proyek Anda secara khusus membutuhkan koneksi database lokal/langsung (SQLite / PostgreSQL) alih-alih murni FE yang mengonsumsi external API:
+
+```bash
+# Generate schema Prisma, client server, dependensi, dan script DB
+pnpm gen:prisma
+
+# Mendorong perubahan skema ke database
+pnpm db:push
+```
+
+Perintah ini akan otomatis:
+1. Membuat `prisma/schema.prisma` dengan model baseline User & Setting.
+2. Membuat `src/server/prisma.ts` singleton client.
+3. Menambahkan `@prisma/client` dan `prisma` ke `package.json`.
+4. Menyuntikkan script `db:push`, `db:studio`, dan `db:generate` ke `package.json`.
+5. Menginstall dependensi dan menjalankan `prisma generate`.
+
+---
+
 ## 📜 Perintah yang Tersedia
 
 | Perintah | Deskripsi |
 |---|---|
 | `pnpm dev` | Menjalankan server development di port 3000 |
-| `pnpm build` | Menjalankan generate Prisma client dan build produksi |
-| `pnpm start` | Menjalankan build produksi |
+| `pnpm build` | Menjalankan build bundle produksi |
+| `pnpm start` | Menjalankan server produksi |
 | `pnpm lint` | Menjalankan linter ESLint |
 | `pnpm kubb:gen` | Menjalankan generate code dari spesifikasi OpenAPI |
-| `pnpm db:push` | Mendorong perubahan skema Prisma ke database |
-| `pnpm db:generate` | Menghasilkan Prisma client |
-| `pnpm db:studio` | Membuka Prisma Studio GUI |
+| `pnpm gen:prisma` | Menginisialisasi Prisma ORM on-demand |
 
 ---
 
