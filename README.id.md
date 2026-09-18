@@ -25,7 +25,7 @@ Dirancang khusus sebagai arsitektur frontend thin-client modern yang berorientas
 - **Styling:** Tailwind CSS + PostCSS dengan Dark Theme bawaan.
 - **Authentication:** Stateless JWT Session menggunakan `jose` dan `bcryptjs` disimpan di `HttpOnly` cookie.
 - **Icons & UI Primitives:** Lucide React, clsx, tailwind-merge (`cn` utility), dan Framer Motion.
-- **Opsional On-Demand Prisma ORM:** Bebas dependensi database secara default (pure frontend garis keras). Jika proyek membutuhkan akses database lokal/langsung, inisialisasi on-demand via `pnpm gen:prisma`.
+- **Modular On-Demand Scaffolding:** Bebas dependensi database & Docker secara default (pure frontend garis keras). Modul Database (Prisma), Docker, dan i18n dapat diinisialisasi on-demand via `pnpm gen:...`.
 
 ---
 
@@ -37,7 +37,9 @@ Dirancang khusus sebagai arsitektur frontend thin-client modern yang berorientas
 ├── openapi/
 │   └── openapi.yaml          # Spesifikasi OpenAPI backend
 ├── scripts/
-│   └── init-prisma.mjs       # Script inisialisasi on-demand Prisma
+│   ├── init-prisma.mjs       # Script inisialisasi on-demand Prisma ORM
+│   ├── init-docker.mjs       # Script inisialisasi on-demand Docker container
+│   └── init-i18n.mjs         # Script inisialisasi on-demand Dual-Language i18n
 ├── src/
 │   ├── app/
 │   │   ├── api/v1/[...path]/ # Reverse Proxy Catch-All ke backend asli
@@ -93,24 +95,36 @@ Akses [http://localhost:3000](http://localhost:3000) pada browser.
 
 ---
 
-## 💾 Opsional: Inisialisasi Prisma ORM
+## 📦 Modul Scaffolding On-Demand
 
-Jika proyek Anda secara khusus membutuhkan koneksi database lokal/langsung (SQLite / PostgreSQL) alih-alih murni FE yang mengonsumsi external API:
-
+### 1. Setup Docker Produksi (`pnpm gen:docker`)
+Membuat konfigurasi containerization multi-stage siap produksi:
 ```bash
-# Generate schema Prisma, client server, dependensi, dan script DB
-pnpm gen:prisma
+pnpm gen:docker
+```
+- Menghasilkan `Dockerfile` multi-stage berbasis Node 22 Alpine dengan Next.js standalone runner.
+- Menghasilkan `docker-compose.yml`.
+- Menghasilkan `.dockerignore`.
 
-# Mendorong perubahan skema ke database
+### 2. Dual-Language i18n (`pnpm gen:i18n`)
+Menyiapkan dukungan multi-bahasa (EN default, auto ID berdasarkan locale browser) ditenagai oleh `next-intl`:
+```bash
+pnpm gen:i18n
+```
+- Menghasilkan `messages/en.json` dan `messages/id.json`.
+- Menyiapkan konfigurasi request di `src/i18n/request.ts`.
+- Membuat komponen pemilih bahasa `src/components/language-switcher.tsx`.
+- Mengupdate `next.config.mjs` dan membungkus root layout dengan `NextIntlClientProvider`.
+
+### 3. Database Prisma ORM (`pnpm gen:prisma`)
+Jika proyek Anda membutuhkan koneksi database langsung (SQLite / PostgreSQL):
+```bash
+pnpm gen:prisma
 pnpm db:push
 ```
-
-Perintah ini akan otomatis:
-1. Membuat `prisma/schema.prisma` dengan model baseline User & Setting.
-2. Membuat `src/server/prisma.ts` singleton client.
-3. Menambahkan `@prisma/client` dan `prisma` ke `package.json`.
-4. Menyuntikkan script `db:push`, `db:studio`, dan `db:generate` ke `package.json`.
-5. Menginstall dependensi dan menjalankan `prisma generate`.
+- Membuat folder `prisma/schema.prisma` dengan model baseline User & Setting.
+- Membuat singleton client `src/server/prisma.ts`.
+- Menambahkan dependensi `@prisma/client` & `prisma` ke `package.json` serta script `db:push`, `db:studio`, dan `db:generate`.
 
 ---
 
@@ -123,6 +137,8 @@ Perintah ini akan otomatis:
 | `pnpm start` | Menjalankan server produksi |
 | `pnpm lint` | Menjalankan linter ESLint |
 | `pnpm kubb:gen` | Menjalankan generate code dari spesifikasi OpenAPI |
+| `pnpm gen:docker` | Menginisialisasi Dockerfile & Docker Compose produksi |
+| `pnpm gen:i18n` | Menginisialisasi internationalization dual-language (EN/ID) |
 | `pnpm gen:prisma` | Menginisialisasi Prisma ORM on-demand |
 
 ---

@@ -10,7 +10,9 @@
     "start": "next start -p 3000",
     "lint": "next lint",
     "kubb:gen": "kubb generate --config kubb.config.ts",
-    "gen:prisma": "node scripts/init-prisma.mjs"
+    "gen:prisma": "node scripts/init-prisma.mjs",
+    "gen:docker": "node scripts/init-docker.mjs",
+    "gen:i18n": "node scripts/init-i18n.mjs"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.62.8",

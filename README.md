@@ -25,7 +25,7 @@ Built as a lightweight, thin-client frontend architecture designed to interface 
 - **Styling:** Tailwind CSS + PostCSS with built-in dark theme.
 - **Stateless JWT Authentication:** Built-in session handling with `jose` and `bcryptjs` via `HttpOnly` cookies.
 - **Icons & UI Primitives:** Lucide React, clsx, tailwind-merge (`cn`), and Framer Motion.
-- **Optional On-Demand Prisma ORM:** Zero database dependencies by default (pure frontend). When fullstack database access is needed, scaffold Prisma on-demand with `pnpm gen:prisma`.
+- **On-Demand Modular Scaffolding:** Pure frontend by default. Database (Prisma), Containerization (Docker), and Localization (i18n) can be scaffolded on-demand via `pnpm gen:...`.
 
 ---
 
@@ -37,7 +37,9 @@ Built as a lightweight, thin-client frontend architecture designed to interface 
 ├── openapi/
 │   └── openapi.yaml          # Upstream OpenAPI specification
 ├── scripts/
-│   └── init-prisma.mjs       # On-demand Prisma scaffolding script
+│   ├── init-prisma.mjs       # On-demand Prisma ORM scaffolding script
+│   ├── init-docker.mjs       # On-demand Docker production scaffolding script
+│   └── init-i18n.mjs         # On-demand Dual-Language i18n scaffolding script
 ├── src/
 │   ├── app/
 │   │   ├── api/v1/[...path]/ # Reverse proxy catch-all to upstream backend
@@ -95,24 +97,36 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## Optional: On-Demand Prisma Setup
+## On-Demand Scaffolding Modules
 
-If your project specifically requires a direct database connection (e.g. SQLite / PostgreSQL) rather than a pure frontend consuming external APIs:
-
+### 1. Docker Production Setup (`pnpm gen:docker`)
+Generates production-grade multi-stage containerization files:
 ```bash
-# Scaffold Prisma schema, server client, dependencies, and DB scripts
-pnpm gen:prisma
+pnpm gen:docker
+```
+- Creates `Dockerfile` (optimized Node 22 Alpine multi-stage build with Next.js standalone runner).
+- Creates `docker-compose.yml`.
+- Creates `.dockerignore`.
 
-# Push schema changes to database
+### 2. Dual-Language i18n (`pnpm gen:i18n`)
+Sets up bilingual support (EN default, auto ID by browser locale/header) powered by `next-intl`:
+```bash
+pnpm gen:i18n
+```
+- Creates `messages/en.json` and `messages/id.json`.
+- Configures `src/i18n/request.ts` request configuration.
+- Creates `src/components/language-switcher.tsx`.
+- Updates `next.config.mjs` and wraps root layout with `NextIntlClientProvider`.
+
+### 3. Prisma ORM Database (`pnpm gen:prisma`)
+If your project specifically requires a direct database connection (e.g. SQLite / PostgreSQL) rather than a pure frontend:
+```bash
+pnpm gen:prisma
 pnpm db:push
 ```
-
-This command automatically:
-1. Creates `prisma/schema.prisma` with baseline User & Setting models.
-2. Creates `src/server/prisma.ts` singleton client.
-3. Adds `@prisma/client` and `prisma` to `package.json`.
-4. Injects `db:push`, `db:studio`, and `db:generate` scripts into `package.json`.
-5. Installs the dependencies and runs `prisma generate`.
+- Creates `prisma/schema.prisma` with baseline User & Setting models.
+- Creates `src/server/prisma.ts` singleton client.
+- Adds `@prisma/client` & `prisma` to `package.json`, plus `db:push`, `db:studio`, and `db:generate` scripts.
 
 ---
 
@@ -125,6 +139,8 @@ This command automatically:
 | `pnpm start` | Run production server |
 | `pnpm lint` | Run ESLint checks |
 | `pnpm kubb:gen` | Generate code from OpenAPI spec |
+| `pnpm gen:docker` | Scaffold production Dockerfile & compose |
+| `pnpm gen:i18n` | Scaffold dual-language (EN/ID) internationalization |
 | `pnpm gen:prisma` | Scaffold Prisma ORM on demand |
 
 ---
