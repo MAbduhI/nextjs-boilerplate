@@ -18,13 +18,30 @@ export function getApiBaseUrl(): string {
   return (process.env.API_BACKEND_URL ?? "http://localhost:8080").replace(/\/+$/, "");
 }
 
-export interface RequestConfig extends RequestInit {
+export interface RequestConfig<TVariables = unknown> extends RequestInit {
   params?: Record<string, any>;
+  data?: TVariables | FormData | any;
 }
 
-export default async function customClient<TData = unknown, TVariables = unknown>(
-  config: RequestConfig & { url: string; data?: TVariables }
-): Promise<TData> {
+export type ResponseErrorConfig<TError = unknown> = Error & {
+  data?: TError;
+  status?: number;
+};
+
+export type ResponseConfig<TData = unknown> = {
+  data: TData;
+  status: number;
+  statusText: string;
+  headers: Headers;
+};
+
+export default async function customClient<
+  TData = unknown,
+  TError = unknown,
+  TVariables = unknown,
+>(
+  config: RequestConfig<TVariables> & { url: string; data?: TVariables | FormData | any }
+): Promise<ResponseConfig<TData>> {
   const { url, params, data, headers, ...rest } = config;
 
   const base = getApiBaseUrl();
@@ -56,14 +73,26 @@ export default async function customClient<TData = unknown, TVariables = unknown
 
   if (!res.ok) {
     const errorBody = await res.json().catch(() => ({}));
-    throw new Error(errorBody.message || errorBody.error || `HTTP error ${res.status}`);
+    const error = new Error(
+      errorBody.message || errorBody.error || `HTTP error ${res.status}`
+    ) as ResponseErrorConfig<TError>;
+    error.status = res.status;
+    error.data = errorBody as TError;
+    throw error;
   }
 
-  // Cek content-type JSON
+  let responseData: any;
   const contentType = res.headers.get("Content-Type") || "";
   if (contentType.includes("application/json")) {
-    return (await res.json()) as TData;
+    responseData = (await res.json()) as TData;
+  } else {
+    responseData = (await res.text()) as unknown as TData;
   }
 
-  return (await res.text()) as unknown as TData;
+  return {
+    data: responseData,
+    status: res.status,
+    statusText: res.statusText,
+    headers: res.headers,
+  };
 }
