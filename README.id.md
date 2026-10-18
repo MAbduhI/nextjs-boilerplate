@@ -23,6 +23,7 @@ Dirancang khusus sebagai arsitektur frontend thin-client modern yang berorientas
     3. **React Query Hooks** (`src/gen/hooks` via `@tanstack/react-query`)
   - Seluruh call otomatis melewati `src/lib/api-client.ts` yang ramah reverse-proxy.
 - **Styling:** Tailwind CSS + PostCSS dengan Dark Theme bawaan.
+- **🎨 UI Kit Terintegrasi (`@rakitmimpi/ui`):** 30+ komponen enterprise ready (Button, Card, StatusChip, Select, Modal, Chart, dll.), terdaftar di `tailwind.config.js` dan re-export via `@/components/ui`.
 - **Authentication:** Stateless JWT Session menggunakan `jose` dan `bcryptjs` disimpan di `HttpOnly` cookie.
 - **Icons & UI Primitives:** Lucide React, clsx, tailwind-merge (`cn` utility), dan Framer Motion.
 - **Modular On-Demand Scaffolding:** Bebas dependensi database & Docker secara default (pure frontend garis keras). Modul Database (Prisma), Docker, dan i18n dapat diinisialisasi on-demand via `pnpm gen:...`.
@@ -92,6 +93,46 @@ pnpm dev
 ```
 
 Akses [http://localhost:3000](http://localhost:3000) pada browser.
+
+---
+
+## 🎨 Menggunakan Rakitmimpi UI Kit (`@rakitmimpi/ui`)
+
+Boilerplate ini sudah dikonfigurasi penuh untuk memakai komponen `@rakitmimpi/ui`:
+1. **Tailwind Scanner**: Class utility otomatis terpindai di `tailwind.config.js`.
+2. **CSS Tokens**: Style dan variabel warna ter-import otomatis di `src/app/globals.css`.
+3. **Shortcut Import**: Bisa langsung diimpor dari `@rakitmimpi/ui` atau lewat alias `@/components/ui`.
+
+```tsx
+import { Button, StatusChip, Badge, Card, Select } from "@/components/ui";
+
+export default function DashboardExample() {
+  return (
+    <Card className="p-6 space-y-4">
+      <div className="flex items-center justify-between">
+        <h3 className="font-bold text-lg">Ringkasan Sistem</h3>
+        <StatusChip status="up" label="SYSTEM ONLINE" pulse />
+      </div>
+
+      <p className="text-sm text-slate-400">
+        Komponen siap pakai dengan konsistensi desain standar industri.
+      </p>
+
+      <div className="flex items-center gap-3">
+        <Button variant="primary" size="sm">
+          Simpan Data
+        </Button>
+        <Button variant="secondary" size="sm">
+          Batal
+        </Button>
+      </div>
+    </Card>
+  );
+}
+```
+
+Katalog dan dokumentasi interaktif seluruh komponen dapat diakses di:
+👉 **[https://storybook.rakitmimpi.my.id](https://storybook.rakitmimpi.my.id)**
 
 ---
 

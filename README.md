@@ -23,6 +23,7 @@ Built as a lightweight, thin-client frontend architecture designed to interface 
     3. **React Query Hooks** (`src/gen/hooks` via `@tanstack/react-query`)
   - All calls flow through proxy-aware HTTP client (`src/lib/api-client.ts`).
 - **Styling:** Tailwind CSS + PostCSS with built-in dark theme.
+- **🎨 Integrated UI Kit (`@rakitmimpi/ui`):** 30+ production-ready enterprise components (Button, Card, StatusChip, Select, Modal, Chart, etc.), pre-configured in `tailwind.config.js` and re-exported via `@/components/ui`.
 - **Stateless JWT Authentication:** Built-in session handling with `jose` and `bcryptjs` via `HttpOnly` cookies.
 - **Icons & UI Primitives:** Lucide React, clsx, tailwind-merge (`cn`), and Framer Motion.
 - **On-Demand Modular Scaffolding:** Pure frontend by default. Database (Prisma), Containerization (Docker), and Localization (i18n) can be scaffolded on-demand via `pnpm gen:...`.
@@ -94,6 +95,46 @@ pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## 🎨 Using Rakitmimpi UI Kit (`@rakitmimpi/ui`)
+
+This boilerplate is fully wired to consume `@rakitmimpi/ui` components:
+1. **Tailwind Scanner**: Class utilities are automatically scanned in `tailwind.config.js`.
+2. **CSS Tokens**: Styles & color tokens are imported in `src/app/globals.css`.
+3. **Shortcut Import**: Import directly from `@rakitmimpi/ui` or use the convenient `@/components/ui` barrel.
+
+```tsx
+import { Button, StatusChip, Badge, Card, Select } from "@/components/ui";
+
+export default function DashboardExample() {
+  return (
+    <Card className="p-6 space-y-4">
+      <div className="flex items-center justify-between">
+        <h3 className="font-bold text-lg">System Overview</h3>
+        <StatusChip status="up" label="SYSTEM ONLINE" pulse />
+      </div>
+
+      <p className="text-sm text-slate-400">
+        Enterprise-grade components ready for rapid production application delivery.
+      </p>
+
+      <div className="flex items-center gap-3">
+        <Button variant="primary" size="sm">
+          Save Changes
+        </Button>
+        <Button variant="secondary" size="sm">
+          Cancel
+        </Button>
+      </div>
+    </Card>
+  );
+}
+```
+
+Interactive Storybook documentation and component gallery:
+👉 **[https://storybook.rakitmimpi.my.id](https://storybook.rakitmimpi.my.id)**
 
 ---
 

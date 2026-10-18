@@ -18,6 +18,8 @@
     "gen:i18n": "node scripts/init-i18n.mjs"
   },
   "dependencies": {
+    "@rakitmimpi/ui": "^0.2.0",
+    "@tabler/icons-react": "^3.46.0",
     "@tanstack/react-query": "^5.62.8",
     "bcryptjs": "^3.0.3",
     "clsx": "^2.1.1",
