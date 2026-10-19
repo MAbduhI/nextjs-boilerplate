@@ -67,11 +67,16 @@ Built as a lightweight, thin-client frontend architecture designed to interface 
 - Node.js >= 20
 - pnpm (recommended) or npm / yarn
 
-### 2. Installation
+### 2. Setup UI Kit & Dependencies
+
+This branch (`with-ui-kit`) uses `@rakitmimpi/ui` as an internal workspace package (`packages/ui`).
 
 ```bash
-# Install dependencies
-pnpm install
+# 1. Pull the latest @rakitmimpi/ui package from GitHub into ./packages/ui
+pnpm ui:pull
+
+# 2. Build the local UI kit package (tsup & styles)
+pnpm ui:build
 ```
 
 ### 3. Environment Configuration

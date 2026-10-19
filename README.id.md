@@ -67,10 +67,16 @@ Dirancang khusus sebagai arsitektur frontend thin-client modern yang berorientas
 - Node.js >= 20
 - pnpm (disarankan) atau npm / yarn
 
-### 2. Instalasi Dependensi
+### 2. Setup UI Kit & Dependensi
+
+Branch ini (`with-ui-kit`) menggunakan `@rakitmimpi/ui` sebagai internal workspace package (`packages/ui`).
 
 ```bash
-pnpm install
+# 1. Tarik package @rakitmimpi/ui terbaru dari GitHub ke ./packages/ui
+pnpm ui:pull
+
+# 2. Build local UI kit package (tsup & styles)
+pnpm ui:build
 ```
 
 ### 3. Konfigurasi Environment

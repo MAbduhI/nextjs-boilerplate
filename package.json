@@ -9,6 +9,8 @@
     "build": "next build",
     "start": "next start -p 3000",
     "lint": "next lint",
+    "ui:pull": "node scripts/pull-ui.mjs",
+    "ui:build": "pnpm --filter @rakitmimpi/ui build",
     "openapi:pull": "node scripts/pull-openapi.mjs",
     "openapi:gen": "kubb generate --config kubb.config.ts",
     "gen:api": "npm run openapi:pull && npm run openapi:gen",
@@ -18,7 +20,7 @@
     "gen:i18n": "node scripts/init-i18n.mjs"
   },
   "dependencies": {
-    "@rakitmimpi/ui": "^0.2.0",
+    "@rakitmimpi/ui": "workspace:*",
     "@tabler/icons-react": "^3.46.0",
     "@tanstack/react-query": "^5.62.8",
     "bcryptjs": "^3.0.3",

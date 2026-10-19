@@ -2,9 +2,9 @@
 
 import React, { type SVGAttributes } from "react";
 import * as TablerIcons from "@tabler/icons-react";
-import { cn } from "../utils/cn";
+import { cn } from "@/lib/utils";
 
-export interface IconProps extends SVGAttributes<SVGSVGElement> {
+export interface IconProps extends Omit<SVGAttributes<SVGSVGElement>, "stroke"> {
   name: string; // e.g. "users", "clock", "calendar", "settings", "home"
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   className?: string;

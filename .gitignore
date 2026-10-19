@@ -2,6 +2,9 @@
 /node_modules
 /.pnpm-store
 
+# internal UI packages
+/packages/ui
+
 # Next.js
 /.next/
 /out/

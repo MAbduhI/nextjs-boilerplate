@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Rakitmimpi UI Kit re-export layer.
  *
