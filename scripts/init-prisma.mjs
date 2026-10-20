@@ -1,7 +1,7 @@
 #!/usr/bin/env node
+import { execSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
-import { execSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -131,7 +131,7 @@ try {
   console.log("\n⚙️ Generating Prisma Client...");
   execSync(`${pm} prisma generate`, { cwd: rootDir, stdio: "inherit" });
   console.log("  ✅ Prisma Client generated.");
-} catch (error) {
+} catch (_error) {
   console.error("\n⚠️ Failed to install dependencies or generate Prisma Client automatically.");
   console.error("Please run manually:");
   console.error(`  ${pm} install`);

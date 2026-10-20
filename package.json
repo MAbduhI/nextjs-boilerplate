@@ -8,7 +8,9 @@
     "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start -p 3000",
-    "lint": "next lint",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write --unsafe .",
+    "format": "biome format --write .",
     "ui:pull": "node scripts/pull-ui.mjs",
     "ui:build": "pnpm --filter @rakitmimpi/ui build",
     "openapi:pull": "node scripts/pull-openapi.mjs",
@@ -34,6 +36,7 @@
     "tailwind-merge": "^3.0.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.4.15",
     "@kubb/cli": "^3.5.0",
     "@kubb/core": "^3.5.0",
     "@kubb/plugin-client": "^3.5.0",

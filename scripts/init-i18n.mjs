@@ -1,7 +1,7 @@
 #!/usr/bin/env node
+import { execSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
-import { execSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -20,56 +20,66 @@ const enMessages = {
   common: {
     title: "Rakitmimpi Next.js 15 App Router Boilerplate",
     headline: "High-Performance Modern Web Architecture",
-    description: "Enterprise-standard Next.js frontend boilerplate by Rakitmimpi Ecosystem. Featuring Tailwind CSS, Dark Mode, OpenAPI & Kubb Codegen, Transparent Backend Reverse-Proxy, Stateless JWT Session, and modular enterprise architecture.",
+    description:
+      "Enterprise-standard Next.js frontend boilerplate by Rakitmimpi Ecosystem. Featuring Tailwind CSS, Dark Mode, OpenAPI & Kubb Codegen, Transparent Backend Reverse-Proxy, Stateless JWT Session, and modular enterprise architecture.",
     login: "Sign In (Login) 🚀",
     github: "GitHub Repository",
     welcome: "Hello",
-    language: "Language"
+    language: "Language",
   },
   features: {
     nextjs: {
       title: "Next.js 15 & React 19",
-      desc: "High-speed App Router, Server Components, Server Actions & Route Handlers."
+      desc: "High-speed App Router, Server Components, Server Actions & Route Handlers.",
     },
     auth: {
       title: "Stateless JWT Auth",
-      desc: "HttpOnly cookie sessions using Jose & BcryptJS, secure against XSS."
+      desc: "HttpOnly cookie sessions using Jose & BcryptJS, secure against XSS.",
     },
     openapi: {
       title: "OpenAPI & Reverse Proxy",
-      desc: "Automatically generated TypeScript types, React Query hooks, and transparent proxy to backend."
-    }
-  }
+      desc: "Automatically generated TypeScript types, React Query hooks, and transparent proxy to backend.",
+    },
+  },
 };
 
 const idMessages = {
   common: {
     title: "Rakitmimpi Next.js 15 App Router Boilerplate",
     headline: "Arsitektur Web Modern Berkinerja Tinggi",
-    description: "Boilerplate frontend Next.js standar Rakitmimpi Ecosystem. Dilengkapi dengan Tailwind CSS, Dark Mode, OpenAPI & Kubb Codegen, Transparent Backend Reverse-Proxy, Stateless JWT Session, dan arsitektur modular enterprise.",
+    description:
+      "Boilerplate frontend Next.js standar Rakitmimpi Ecosystem. Dilengkapi dengan Tailwind CSS, Dark Mode, OpenAPI & Kubb Codegen, Transparent Backend Reverse-Proxy, Stateless JWT Session, dan arsitektur modular enterprise.",
     login: "Mulai Masuk (Login) 🚀",
     github: "GitHub Repository",
     welcome: "Halo",
-    language: "Bahasa"
+    language: "Bahasa",
   },
   features: {
     nextjs: {
       title: "Next.js 15 & React 19",
-      desc: "App Router, Server Components, Server Actions & Route Handlers berkecepatan tinggi."
+      desc: "App Router, Server Components, Server Actions & Route Handlers berkecepatan tinggi.",
     },
     auth: {
       title: "Stateless JWT Auth",
-      desc: "HttpOnly cookie session menggunakan library Jose & BcryptJS aman terhadap XSS."
+      desc: "HttpOnly cookie session menggunakan library Jose & BcryptJS aman terhadap XSS.",
     },
     openapi: {
       title: "OpenAPI & Reverse Proxy",
-      desc: "Otomatis generate TypeScript types, React Query hooks, dan transparent proxy ke backend."
-    }
-  }
+      desc: "Otomatis generate TypeScript types, React Query hooks, dan transparent proxy ke backend.",
+    },
+  },
 };
 
-fs.writeFileSync(path.join(messagesDir, "en.json"), JSON.stringify(enMessages, null, 2) + "\n", "utf-8");
-fs.writeFileSync(path.join(messagesDir, "id.json"), JSON.stringify(idMessages, null, 2) + "\n", "utf-8");
+fs.writeFileSync(
+  path.join(messagesDir, "en.json"),
+  JSON.stringify(enMessages, null, 2) + "\n",
+  "utf-8",
+);
+fs.writeFileSync(
+  path.join(messagesDir, "id.json"),
+  JSON.stringify(idMessages, null, 2) + "\n",
+  "utf-8",
+);
 console.log("  ✅ Created messages/en.json and messages/id.json");
 
 // 2. Create src/i18n/request.ts
@@ -255,7 +265,7 @@ console.log(`\n📦 Installing next-intl using ${pm}...`);
 try {
   execSync(`${pm} install`, { cwd: rootDir, stdio: "inherit" });
   console.log("  ✅ Dependencies installed successfully.");
-} catch (error) {
+} catch (_error) {
   console.error("\n⚠️ Failed to install dependencies automatically.");
   console.error("Please run manually:");
   console.error(`  ${pm} install\n`);
@@ -265,4 +275,6 @@ console.log("\n🎉 Dual-Language i18n setup complete!");
 console.log("How to use:");
 console.log("  1. Server Component: const t = await getTranslations('common');");
 console.log("  2. Client Component: const t = useTranslations('common');");
-console.log("  3. Switcher:         import { LanguageSwitcher } from '@/components/language-switcher';\n");
+console.log(
+  "  3. Switcher:         import { LanguageSwitcher } from '@/components/language-switcher';\n",
+);

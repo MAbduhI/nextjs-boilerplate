@@ -35,12 +35,8 @@ export type ResponseConfig<TData = unknown> = {
   headers: Headers;
 };
 
-export default async function customClient<
-  TData = unknown,
-  TError = unknown,
-  TVariables = unknown,
->(
-  config: RequestConfig<TVariables> & { url: string; data?: TVariables | FormData | any }
+export default async function customClient<TData = unknown, TError = unknown, TVariables = unknown>(
+  config: RequestConfig<TVariables> & { url: string; data?: TVariables | FormData | any },
 ): Promise<ResponseConfig<TData>> {
   const { url, params, data, headers, ...rest } = config;
 
@@ -74,7 +70,7 @@ export default async function customClient<
   if (!res.ok) {
     const errorBody = await res.json().catch(() => ({}));
     const error = new Error(
-      errorBody.message || errorBody.error || `HTTP error ${res.status}`
+      errorBody.message || errorBody.error || `HTTP error ${res.status}`,
     ) as ResponseErrorConfig<TError>;
     error.status = res.status;
     error.data = errorBody as TError;

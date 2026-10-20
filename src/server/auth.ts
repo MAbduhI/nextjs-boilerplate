@@ -1,9 +1,9 @@
 import bcrypt from "bcryptjs";
-import { SignJWT, jwtVerify } from "jose";
+import { jwtVerify, SignJWT } from "jose";
 import { cookies } from "next/headers";
 
 const JWT_SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET || "rakitmimpi-nextjs-boilerplate-super-secret-jwt-key"
+  process.env.JWT_SECRET || "rakitmimpi-nextjs-boilerplate-super-secret-jwt-key",
 );
 
 const COOKIE_NAME = "rakitmimpi_session";

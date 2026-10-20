@@ -182,7 +182,9 @@ pnpm db:push
 | `pnpm dev` | Menjalankan server development di port 3000 |
 | `pnpm build` | Menjalankan build bundle produksi |
 | `pnpm start` | Menjalankan server produksi |
-| `pnpm lint` | Menjalankan linter ESLint |
+| `pnpm lint` | Menjalankan pemeriksaan linter & formatter Biome |
+| `pnpm lint:fix` | Memperbaiki dan memformat kode otomatis dengan Biome |
+| `pnpm format` | Memformat seluruh kode menggunakan Biome |
 | `pnpm kubb:gen` | Menjalankan generate code dari spesifikasi OpenAPI |
 | `pnpm gen:docker` | Menginisialisasi Dockerfile & Docker Compose produksi |
 | `pnpm gen:i18n` | Menginisialisasi internationalization dual-language (EN/ID) |

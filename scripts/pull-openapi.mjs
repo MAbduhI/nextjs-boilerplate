@@ -24,9 +24,7 @@ const openapiDir = path.join(rootDir, "openapi");
 
 // Target URL dari CLI arguments atau Environment Variable (default ke Go Backend :8095 /swagger/doc.json)
 const targetUrl =
-  process.argv[2] ||
-  process.env.OPENAPI_URL ||
-  "http://localhost:8095/swagger/doc.json";
+  process.argv[2] || process.env.OPENAPI_URL || "http://localhost:8095/swagger/doc.json";
 
 async function main() {
   console.log(`[openapi:pull] Menghubungi backend di: ${targetUrl}`);
@@ -45,7 +43,7 @@ async function main() {
       throw new Error(`HTTP ${res.status} ${res.statusText}`);
     }
 
-    const contentType = res.headers.get("content-type") || "";
+    const _contentType = res.headers.get("content-type") || "";
     const text = await res.text();
 
     if (!text || text.trim().length === 0) {
@@ -71,20 +69,20 @@ async function main() {
     }
 
     console.log(
-      `✔ [openapi:pull] Berhasil mengunduh spesifikasi OpenAPI ke: ${path.relative(rootDir, outputFile)}`
+      `✔ [openapi:pull] Berhasil mengunduh spesifikasi OpenAPI ke: ${path.relative(rootDir, outputFile)}`,
     );
     console.log(
-      `ℹ [openapi:pull] Sekarang jalankan 'npm run openapi:gen' untuk me-regenerate TypeScript types & hooks.`
+      `ℹ [openapi:pull] Sekarang jalankan 'npm run openapi:gen' untuk me-regenerate TypeScript types & hooks.`,
     );
   } catch (err) {
     console.error(`✖ [openapi:pull] Gagal mengambil OpenAPI spec dari ${targetUrl}`);
     console.error(`  Detail error: ${err.message}`);
     console.error(
       `\n💡 Tips:\n` +
-      `  1. Pastikan backend aktif (misal di http://localhost:8095).\n` +
-      `  2. Atau tentukan URL spesifik:\n` +
-      `     OPENAPI_URL=http://localhost:8095/api/v1/openapi.yaml npm run openapi:pull\n` +
-      `  3. Jika backend offline, file cadangan ./openapi/openapi.yaml tetap bisa digunakan untuk 'npm run openapi:gen'.`
+        `  1. Pastikan backend aktif (misal di http://localhost:8095).\n` +
+        `  2. Atau tentukan URL spesifik:\n` +
+        `     OPENAPI_URL=http://localhost:8095/api/v1/openapi.yaml npm run openapi:pull\n` +
+        `  3. Jika backend offline, file cadangan ./openapi/openapi.yaml tetap bisa digunakan untuk 'npm run openapi:gen'.`,
     );
     process.exit(1);
   }

@@ -13,10 +13,10 @@
  *   UI_KIT_REPO=https://github.com/user/custom-repo.git pnpm ui:pull
  */
 
-import fs from "node:fs";
-import path from "node:path";
-import os from "node:os";
 import { execSync } from "node:child_process";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -25,8 +25,7 @@ const rootDir = path.resolve(__dirname, "..");
 const packagesDir = path.join(rootDir, "packages");
 const targetUiDir = path.join(packagesDir, "ui");
 
-const targetRepo =
-  process.env.UI_KIT_REPO || "https://github.com/MAbduhI/rakitmimpi.git";
+const targetRepo = process.env.UI_KIT_REPO || "https://github.com/MAbduhI/rakitmimpi.git";
 const targetBranch = process.env.UI_KIT_BRANCH || "main";
 const localFallbackPath =
   process.env.UI_KIT_LOCAL_PATH || "/app/data/Base/ui-kit-react/packages/ui";
@@ -59,7 +58,7 @@ function applyCompatibilityPatches(uiDir) {
     if (!tsupContent.includes("banner:")) {
       tsupContent = tsupContent.replace(
         'external: ["react", "react-dom"],',
-        'external: ["react", "react-dom"],\n  banner: { js: \'"use client";\' },'
+        'external: ["react", "react-dom"],\n  banner: { js: \'"use client";\' },',
       );
       fs.writeFileSync(tsupPath, tsupContent, "utf-8");
     }
@@ -73,7 +72,7 @@ function applyCompatibilityPatches(uiDir) {
       css = css.replace("@layer base {\n", "/* @layer base */\n");
       css = css.replace(
         "    display: none;\n  }\n}\n\n/*\n * RunBanner",
-        "    display: none;\n  }\n/* end base */\n\n/*\n * RunBanner"
+        "    display: none;\n  }\n/* end base */\n\n/*\n * RunBanner",
       );
       fs.writeFileSync(stylesPath, css, "utf-8");
     }
@@ -81,7 +80,9 @@ function applyCompatibilityPatches(uiDir) {
 }
 
 async function main() {
-  console.log(`[ui:pull] Memulai penarikan packages/ui dari ${targetRepo} (branch: ${targetBranch})...`);
+  console.log(
+    `[ui:pull] Memulai penarikan packages/ui dari ${targetRepo} (branch: ${targetBranch})...`,
+  );
 
   if (!fs.existsSync(packagesDir)) {
     fs.mkdirSync(packagesDir, { recursive: true });
@@ -94,7 +95,7 @@ async function main() {
     console.log(`[ui:pull] Melakukan sparse checkout dari GitHub ke temporary directory...`);
     execSync(
       `git clone --depth 1 --branch ${targetBranch} --filter=blob:none --sparse ${targetRepo} "${tempDir}"`,
-      { stdio: "pipe" }
+      { stdio: "pipe" },
     );
     execSync(`git sparse-checkout set packages/ui`, { cwd: tempDir, stdio: "pipe" });
 
@@ -108,7 +109,9 @@ async function main() {
       pulledSuccessfully = true;
     }
   } catch (err) {
-    console.warn(`[ui:pull] Gagal mengambil via git remote (${err.message}). Memeriksa local fallback...`);
+    console.warn(
+      `[ui:pull] Gagal mengambil via git remote (${err.message}). Memeriksa local fallback...`,
+    );
     if (fs.existsSync(localFallbackPath)) {
       console.log(`[ui:pull] Menggunakan sumber lokal di: ${localFallbackPath}`);
       if (fs.existsSync(targetUiDir)) {
@@ -131,8 +134,9 @@ async function main() {
     console.log(`✔ [ui:pull] Folder packages/ui berhasil diperbarui.`);
 
     console.log(`[ui:pull] Menjalankan pnpm install untuk menghubungkan workspace package...`);
+    const pnpmCmd = fs.existsSync("/opt/data/bin/pnpm") ? "/opt/data/bin/pnpm" : "pnpm";
     try {
-      execSync("pnpm install", { cwd: rootDir, stdio: "inherit" });
+      execSync(`${pnpmCmd} install`, { cwd: rootDir, stdio: "inherit" });
       console.log(`\n✔ [ui:pull] Selesai! @rakitmimpi/ui berhasil terhubung ke workspace.`);
       console.log(`ℹ [ui:pull] Sekarang jalankan: pnpm ui:build\n`);
     } catch (installErr) {

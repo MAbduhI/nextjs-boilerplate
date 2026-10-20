@@ -16,10 +16,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 function getBackendUrl(): string {
-  return (process.env.API_BACKEND_URL ?? "http://localhost:8080").replace(
-    /\/+$/,
-    ""
-  );
+  return (process.env.API_BACKEND_URL ?? "http://localhost:8080").replace(/\/+$/, "");
 }
 
 function getApiKey(): string {
@@ -77,7 +74,7 @@ async function handler(request: NextRequest) {
         message: error.message || "Failed to reach backend service",
         target,
       },
-      { status: 502 }
+      { status: 502 },
     );
   }
 }

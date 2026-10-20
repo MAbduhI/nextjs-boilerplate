@@ -10,8 +10,8 @@ const inputPath =
   (fs.existsSync("./openapi/doc.json")
     ? "./openapi/doc.json"
     : fs.existsSync("./openapi/openapi.json")
-    ? "./openapi/openapi.json"
-    : "./openapi/openapi.yaml");
+      ? "./openapi/openapi.json"
+      : "./openapi/openapi.yaml");
 
 export default defineConfig({
   input: {

@@ -183,7 +183,9 @@ pnpm db:push
 | `pnpm dev` | Start development server on port 3000 |
 | `pnpm build` | Build production bundle |
 | `pnpm start` | Run production server |
-| `pnpm lint` | Run ESLint checks |
+| `pnpm lint` | Run Biome linter & formatting checks |
+| `pnpm lint:fix` | Automatically fix and format code with Biome |
+| `pnpm format` | Run Biome code formatter |
 | `pnpm kubb:gen` | Generate code from OpenAPI spec |
 | `pnpm gen:docker` | Scaffold production Dockerfile & compose |
 | `pnpm gen:i18n` | Scaffold dual-language (EN/ID) internationalization |

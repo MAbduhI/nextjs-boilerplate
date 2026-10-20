@@ -1,7 +1,7 @@
 "use client";
 
-import React, { type SVGAttributes } from "react";
 import * as TablerIcons from "@tabler/icons-react";
+import type { SVGAttributes } from "react";
 import { cn } from "@/lib/utils";
 
 export interface IconProps extends Omit<SVGAttributes<SVGSVGElement>, "stroke"> {
@@ -30,7 +30,8 @@ function toExportName(kebab: string): string {
 
 export function Icon({ name, size = "md", className = "", stroke = 1.75, ...props }: IconProps) {
   const exportName = toExportName(name);
-  const Component = (TablerIcons as any)[exportName] || (TablerIcons as any)[name] || TablerIcons.IconHelp;
+  const Component =
+    (TablerIcons as any)[exportName] || (TablerIcons as any)[name] || TablerIcons.IconHelp;
 
   return (
     <Component

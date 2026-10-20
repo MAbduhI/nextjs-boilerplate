@@ -1,0 +1,94 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.15/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true,
+    "defaultBranch": "main"
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "includes": [
+      "src/**",
+      "scripts/**",
+      "*.ts",
+      "*.mjs",
+      "*.js",
+      "!**/*.css",
+      "!**/*.md",
+      "!**/*.html",
+      "!**/*.yaml",
+      "!**/*.yml",
+      "!openapi",
+      "!packages/ui",
+      "!!node_modules",
+      "!!dist",
+      "!!build",
+      "!!.next"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "auto",
+    "lineWidth": 100,
+    "attributePosition": "auto",
+    "bracketSameLine": false,
+    "bracketSpacing": true
+  },
+  "linter": {
+    "enabled": true,
+    "domains": {
+      "react": "all"
+    },
+    "rules": {
+      "recommended": true,
+      "correctness": {
+        "useUniqueElementIds": "off",
+        "noUnusedImports": "error",
+        "noUnusedVariables": "warn"
+      },
+      "complexity": {
+        "useLiteralKeys": "off"
+      },
+      "performance": {
+        "noImgElement": "off"
+      },
+      "suspicious": {
+        "noConsole": "off",
+        "noEmptyInterface": "off",
+        "noExplicitAny": "off"
+      },
+      "style": {
+        "useComponentExportOnlyModules": "off",
+        "useConsistentCurlyBraces": "off",
+        "useFilenamingConvention": "off",
+        "useTemplate": "off"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "trailingCommas": "all",
+      "semicolons": "always",
+      "attributePosition": "auto"
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "recommended": true
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["**/*.json", "**/*.jsonc"],
+      "assist": { "enabled": false }
+    }
+  ]
+}

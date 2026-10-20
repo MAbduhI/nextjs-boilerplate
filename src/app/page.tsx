@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { getSession } from "@/server/auth";
 import { Badge, Button, Card, StatusChip } from "@/components/ui";
+import { getSession } from "@/server/auth";
 
 export default async function HomePage() {
   const session = await getSession();
@@ -18,7 +18,9 @@ export default async function HomePage() {
       </h1>
 
       <p className="text-slate-400 text-base max-w-xl mx-auto leading-relaxed">
-        Boilerplate frontend Next.js standar Rakitmimpi Ecosystem. Dilengkapi dengan Tailwind CSS, Dark Mode, UI Kit terintegrasi (@rakitmimpi/ui), OpenAPI &amp; Kubb Codegen, Transparent Backend Reverse-Proxy, dan Stateless JWT Session.
+        Boilerplate frontend Next.js standar Rakitmimpi Ecosystem. Dilengkapi dengan Tailwind CSS,
+        Dark Mode, UI Kit terintegrasi (@rakitmimpi/ui), OpenAPI &amp; Kubb Codegen, Transparent
+        Backend Reverse-Proxy, dan Stateless JWT Session.
       </p>
 
       <div className="flex flex-wrap items-center justify-center gap-4">
@@ -34,21 +36,13 @@ export default async function HomePage() {
           </Link>
         )}
 
-        <a
-          href="https://storybook.rakitmimpi.my.id"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a href="https://storybook.rakitmimpi.my.id" target="_blank" rel="noreferrer">
           <Button variant="secondary" size="md">
             Komponen Storybook 📚
           </Button>
         </a>
 
-        <a
-          href="https://github.com/MAbduhI/rakitmimpi"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a href="https://github.com/MAbduhI/rakitmimpi" target="_blank" rel="noreferrer">
           <Button variant="outline" size="md">
             GitHub UI Kit
           </Button>
@@ -60,7 +54,8 @@ export default async function HomePage() {
           <span className="text-2xl mb-2 block">🎨</span>
           <h3 className="font-bold text-white text-sm">@rakitmimpi/ui Ready</h3>
           <p className="text-xs text-slate-400 mt-1">
-            Pre-configured Tailwind tokens, Nordic Dark &amp; Swiss themes, 30+ enterprise components &amp; Storybook docs.
+            Pre-configured Tailwind tokens, Nordic Dark &amp; Swiss themes, 30+ enterprise
+            components &amp; Storybook docs.
           </p>
         </Card>
         <Card className="p-5 border-slate-800/80 bg-slate-900/60">

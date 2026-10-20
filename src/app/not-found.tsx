@@ -1,9 +1,7 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 export default function NotFound() {
   return (
@@ -34,7 +32,8 @@ export default function NotFound() {
             Oops, something went wrong
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto leading-relaxed">
-            Error 404 Page not found. Sorry the page you looking for doesn&apos;t exist or has been moved.
+            Error 404 Page not found. Sorry the page you looking for doesn&apos;t exist or has been
+            moved.
           </p>
         </div>
 

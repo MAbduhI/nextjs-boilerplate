@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useRef, useEffect, type ReactNode } from "react";
-import { ChevronDown, Check } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 export interface SelectOption {
@@ -76,14 +76,12 @@ export function CustomSelect({
           "bg-white dark:bg-slate-900/90 text-slate-800 dark:text-slate-100 border-slate-200 dark:border-white/10 hover:border-indigo-500/60 dark:hover:border-indigo-500/60",
           isOpen ? "border-indigo-500 ring-2 ring-indigo-500/10 dark:ring-indigo-500/20" : "",
           disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer",
-          triggerClassName
+          triggerClassName,
         )}
       >
         <div className="flex items-center gap-2 truncate">
           {selectedOption?.icon && <span className="shrink-0">{selectedOption.icon}</span>}
-          <span className="truncate">
-            {selectedOption ? selectedOption.label : placeholder}
-          </span>
+          <span className="truncate">{selectedOption ? selectedOption.label : placeholder}</span>
           {selectedOption?.badge && (
             <span className="text-[9px] font-sans tabular-nums px-1.5 py-0.2 rounded bg-indigo-50 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-500/30 shrink-0">
               {selectedOption.badge}
@@ -93,7 +91,7 @@ export function CustomSelect({
         <ChevronDown
           className={cn(
             "w-3.5 h-3.5 text-slate-400 shrink-0 transition-transform duration-200",
-            isOpen ? "transform rotate-180 text-indigo-500" : ""
+            isOpen ? "transform rotate-180 text-indigo-500" : "",
           )}
         />
       </button>
@@ -105,7 +103,7 @@ export function CustomSelect({
             "absolute z-50 mt-1.5 w-full min-w-[210px] rounded-md p-1.5 shadow-xl border backdrop-blur-xl animate-in fade-in zoom-in-95 duration-150",
             "bg-white/95 dark:bg-[#111315]/95 border-slate-200 dark:border-white/10 text-slate-800 dark:text-slate-100 shadow-slate-300/40 dark:shadow-black/60",
             "max-h-64 overflow-y-auto scrollbar-thin",
-            dropdownClassName
+            dropdownClassName,
           )}
         >
           {options.length === 0 ? (
@@ -127,7 +125,7 @@ export function CustomSelect({
                     "w-full flex items-center justify-between gap-2.5 px-3 py-2 rounded-md text-xs font-medium text-left transition-colors duration-100",
                     isSelected
                       ? "bg-indigo-50 dark:bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 font-bold"
-                      : "hover:bg-slate-100 dark:hover:bg-white/5 text-slate-700 dark:text-slate-300"
+                      : "hover:bg-slate-100 dark:hover:bg-white/5 text-slate-700 dark:text-slate-300",
                   )}
                 >
                   <div className="flex items-center gap-2 min-w-0">
@@ -148,7 +146,9 @@ export function CustomSelect({
                         {option.badge}
                       </span>
                     )}
-                    {isSelected && <Check className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />}
+                    {isSelected && (
+                      <Check className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+                    )}
                   </div>
                 </button>
               );

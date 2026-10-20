@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import { ArrowLeft, Check, ChevronDown, ChevronUp, Copy, RefreshCw } from "lucide-react";
 import Link from "next/link";
-import { ArrowLeft, RefreshCw, ChevronDown, ChevronUp, Copy, Check } from "lucide-react";
+import { useState } from "react";
 
 export default function ErrorPage({
   error,
@@ -49,7 +49,8 @@ export default function ErrorPage({
             Oops, something went wrong
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto leading-relaxed">
-            Server Error 500. We apologise and are fixing the problem. Please try again at a later stage.
+            Server Error 500. We apologise and are fixing the problem. Please try again at a later
+            stage.
           </p>
         </div>
 
@@ -93,11 +94,17 @@ export default function ErrorPage({
                   onClick={handleCopy}
                   className="p-1 text-slate-400 hover:text-white cursor-pointer flex items-center gap-1 shrink-0"
                 >
-                  {copied ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                  {copied ? (
+                    <Check className="w-3 h-3 text-emerald-400" />
+                  ) : (
+                    <Copy className="w-3 h-3" />
+                  )}
                   <span className="text-[10px]">{copied ? "Copied" : "Copy"}</span>
                 </button>
               </div>
-              {error.digest && <div className="text-[10px] text-indigo-400">Digest: {error.digest}</div>}
+              {error.digest && (
+                <div className="text-[10px] text-indigo-400">Digest: {error.digest}</div>
+              )}
               <pre className="max-h-28 overflow-y-auto text-[10px] text-slate-400 whitespace-pre-wrap leading-tight">
                 {error.stack || "No stack trace available"}
               </pre>
